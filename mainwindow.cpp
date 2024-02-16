@@ -5,7 +5,7 @@
 #include <fstream>
 #include <ctunes.h>
 #include <genero.h>
-
+#include <QMessageBox>>
 Ctunes ctunes;
 genero enumGenero;
 using std::string;
@@ -32,9 +32,9 @@ void MainWindow::on_AgregarCancionBt_pressed()
 {
     std::string NombreSong = ui->NombreCancion->text().toStdString();
     std::string nombreCantante = ui->NombreCantante->text().toStdString();
-    std::string GeneroMusical = ui->Genero->text().toStdString();
-
-
+    //std::string GeneroMusical = ui->Genero->text().toStdString();
+    std::string duracion = ui->Duracion->text().toStdString();
+    std::string GeneroMusical=ui-> genero->currentText().toStdString();
     // Convert string to enum
     if (GeneroMusical == "POP") {
         enumGenero = POP;
@@ -53,9 +53,9 @@ void MainWindow::on_AgregarCancionBt_pressed()
     }
 
     double precioSong = ui->Precio->text().toDouble();
-      ctunes.addSong(NombreSong, nombreCantante, enumGenero, precioSong);
-    std::cout<<"termino";
 
+      ctunes.addSong(NombreSong, nombreCantante, enumGenero, precioSong,duracion);
+    std::cout<<"termino";
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -63,6 +63,13 @@ void MainWindow::on_AgregarCancionBt_pressed()
 
 void MainWindow::on_pushButtonGuardar_pressed()
 {
+    int code = ui->CODESONG->text().toInt();
+    int stars = ui->CantStars->text().toInt();
+    if(ctunes.reviewSong(code,stars)){
+         QMessageBox:: information(this,"Guardado",QString(QString:: fromStdString("Se guardo Correctamente")));
+    }else {
+        QMessageBox:: information(this,"OPS...",QString(QString:: fromStdString("Algo salio mal")));
+    }
      ui->stackedWidget->setCurrentIndex (0) ;
 }
 
@@ -120,5 +127,22 @@ void MainWindow::on_pushButton_4_pressed()
 void MainWindow::on_pushButton_5_pressed()
 {
     ui->stackedWidget->setCurrentIndex (0);
+}
+
+
+void MainWindow::on_BuyButton_6_pressed()
+{
+    int code = ui->CodigoDeCancion->text().toInt();
+    std::string NombreCliente = ui->NombreCliente->text().toStdString();
+    QMessageBox:: information(this,"hello",QString(QString:: fromStdString(ctunes.downloadSong(code,NombreCliente))));
+
+}
+
+
+void MainWindow::on_pushButton_6_pressed()
+{
+    std::string nombretxt = ui->Nametext->text().toStdString();
+    QString info = QString:: fromStdString(ctunes.songs(nombretxt));
+    ui->SongsText->setText(info);
 }
 

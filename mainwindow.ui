@@ -17,14 +17,14 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>120</y>
+      <x>100</x>
+      <y>110</y>
       <width>631</width>
       <height>381</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QWidget" name="widget" native="true">
@@ -134,7 +134,7 @@
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>30</y>
+        <y>0</y>
         <width>131</width>
         <height>41</height>
        </rect>
@@ -143,27 +143,63 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;Songs&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QTextBrowser" name="textBrowser">
+     <widget class="QTextBrowser" name="SongsText">
       <property name="geometry">
        <rect>
         <x>60</x>
         <y>80</y>
-        <width>501</width>
-        <height>231</height>
+        <width>541</width>
+        <height>261</height>
        </rect>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>350</y>
+        <x>20</x>
+        <y>340</y>
         <width>100</width>
         <height>32</height>
        </rect>
       </property>
       <property name="text">
        <string>Regresar</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="Nametext">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>40</y>
+        <width>151</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>20</y>
+        <width>121</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ingrese el nombre:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_6">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>340</y>
+        <width>100</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Refrescar</string>
       </property>
      </widget>
     </widget>
@@ -194,7 +230,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ingrese el codigo de la cancion:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_7">
+     <widget class="QLineEdit" name="CodigoDeCancion">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -217,7 +253,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ingrese el nombre del cliente:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_8">
+     <widget class="QLineEdit" name="NombreCliente">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -230,14 +266,27 @@
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>260</y>
+        <x>10</x>
+        <y>310</y>
         <width>131</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Descargar cancion</string>
+       <string>Regresar</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="BuyButton_6">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>250</y>
+        <width>121</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Comprar</string>
       </property>
      </widget>
     </widget>
@@ -268,7 +317,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ingrese el codigo de la cancion: &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_5">
+     <widget class="QLineEdit" name="CODESONG">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -291,7 +340,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Seleccione las estrellas:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
+     <widget class="QLineEdit" name="CantStars">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -319,8 +368,8 @@
      <widget class="QWidget" name="widget_2" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>0</y>
+        <x>40</x>
+        <y>-10</y>
         <width>631</width>
         <height>381</height>
        </rect>
@@ -341,8 +390,8 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>90</y>
+         <x>20</x>
+         <y>80</y>
          <width>201</width>
          <height>16</height>
         </rect>
@@ -367,8 +416,8 @@
       <widget class="QLineEdit" name="NombreCancion">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>110</y>
+         <x>20</x>
+         <y>100</y>
          <width>241</width>
          <height>31</height>
         </rect>
@@ -377,8 +426,8 @@
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>150</y>
+         <x>320</x>
+         <y>80</y>
          <width>241</width>
          <height>16</height>
         </rect>
@@ -390,8 +439,8 @@
       <widget class="QLineEdit" name="NombreCantante">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>170</y>
+         <x>320</x>
+         <y>100</y>
          <width>241</width>
          <height>31</height>
         </rect>
@@ -400,8 +449,8 @@
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>210</y>
+         <x>20</x>
+         <y>160</y>
          <width>251</width>
          <height>16</height>
         </rect>
@@ -410,21 +459,11 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ingrese el genero de musica del cantante:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="Genero">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>230</y>
-         <width>241</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_6">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>270</y>
+         <x>320</x>
+         <y>160</y>
          <width>111</width>
          <height>16</height>
         </rect>
@@ -436,12 +475,80 @@
       <widget class="QLineEdit" name="Precio">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>290</y>
+         <x>320</x>
+         <y>180</y>
          <width>241</width>
          <height>31</height>
         </rect>
        </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>230</y>
+         <width>131</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Ingrese la duracion:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="Duracion">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>250</y>
+         <width>191</width>
+         <height>31</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="genero">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>171</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>POP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RAP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ROCK</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>DANCE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>REGGAE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ELECTRONICA</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RANCHERA</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </widget>

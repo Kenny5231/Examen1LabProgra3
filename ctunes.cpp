@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <QDate>
-//
+#include <QTextStream>
 //convierto son en ese archivo
 QFile Songs("/Users/Kenny/Proyects_Pragra3/ExamenProgra3Lab/songs.itn");
 QFile Codigo("/Users/Kenny/Proyects_Pragra3/ExamenProgra3Lab/codigo.itn");
@@ -44,8 +44,17 @@ int Ctunes::getCodigo(long offset) {
     return tempo;
 }
 
-void Ctunes::addSong(std::string nombre, std::string cantante, genero generoCantante, double precio) {
+void Ctunes::addSong(std::string nombre, std::string cantante, genero generoCantante, double precio,    std::string duracion) {
     Formato p;
+        //int code = 0;
+        //QString cancion =" ";
+        //QString  nombreCantante = " ";
+        //genero generoMusical;
+        //double precioDownload = 0.0;
+        //int estrellas = 0;
+        //int reviews = 0;
+        //int raiting = 0;
+        //QString Duracion=" ";
     //en caso de cambiar el download debo de pasarlo a 4
     p.code=getCodigo(0);
     p.cancion = QString:: fromStdString(nombre);
@@ -55,17 +64,36 @@ void Ctunes::addSong(std::string nombre, std::string cantante, genero generoCant
     p.estrellas = 0;
     p.reviews = 0;
     p.raiting = 0;
+    p.Duracion= QString:: fromStdString(duracion);
     Songs.seek(Songs.size());
-    write << p.code<<p.cancion<<p.nombreCantante<<p.generoMusical<<p.precioDownload<<p.estrellas<<p.reviews<<p.raiting;
+    write << p.code<<p.cancion<<p.nombreCantante<<p.generoMusical<<p.precioDownload<<p.estrellas<<p.reviews<<p.raiting<< p.Duracion;
     Songs.flush();
 }
-
+bool Ctunes::reviewSong(int code, int stars)
+{
+    Songs.seek(0);
+    while (!Songs.atEnd()) {
+        long seek = Songs.pos();
+        Formato cancion;
+        read >> cancion.code >> cancion.cancion >> cancion.nombreCantante >> cancion.generoMusical >> cancion.precioDownload >> cancion.estrellas >> cancion.reviews >> cancion.raiting>> cancion.Duracion;
+        if (cancion.code == code) {
+            int newreviews = cancion.reviews + 1;
+            int newstars = cancion.estrellas + stars;
+            double rating= newstars/newreviews;
+            Songs.seek(seek);
+            write << cancion.code << cancion.cancion << cancion.nombreCantante << cancion.generoMusical << cancion.precioDownload << newstars << newreviews << rating << cancion.Duracion;
+            Songs.flush();
+            return true;
+        }
+    }
+    return false;
+}
 string Ctunes::downloadSong(int codeSong, string cliente)
 {
     Songs.seek(0);
     while(!Songs.atEnd()){
         Formato cancion;
-        read>>cancion.code>>cancion.cancion>>cancion.nombreCantante>>cancion.generoMusical>>cancion.precioDownload>>cancion.estrellas>>cancion.reviews>>cancion.raiting;
+        read>>cancion.code>>cancion.cancion>>cancion.nombreCantante>>cancion.generoMusical>>cancion.precioDownload>>cancion.estrellas>>cancion.reviews>>cancion.raiting>> cancion.Duracion;
         string genero1;
         if (cancion.code==codeSong){
             FormatoDownloads downloads;
@@ -92,7 +120,23 @@ string Ctunes::downloadSong(int codeSong, string cliente)
 }
 
 std::string Ctunes::songs(std::string txtFile) {
-    return "";
+    string info="";
+    QString direccion= "/Users/Kenny/Proyects_Pragra3/ExamenProgra3Lab/"+QString::fromStdString(txtFile)+".txt";
+    QFile archivotxt (direccion);
+    QTextStream escritura(&archivotxt);
+    archivotxt.open(QIODevice::ReadWrite);
+    archivotxt.resize(0);
+    Songs.seek(0);
+
+    Formato Song;
+    while(!Songs.atEnd()){
+        //CODIGO – TITULO – CANTANTE – DURACION – PRECIO – RATING
+        read>>Song.code>>Song.cancion>>Song.nombreCantante>>Song.generoMusical>>Song.precioDownload>>Song.estrellas>>Song.reviews>>Song.raiting>>Song.Duracion;
+        escritura << Song.code<<" - " << Song.cancion <<" - "<< Song.nombreCantante <<" - "<< Song.Duracion <<" - "<< Song.precioDownload <<" - "<< Song.raiting<<".\n" ;
+        info+=QString::number(Song.code).toStdString()+"-" + Song.cancion.toStdString()+" - "+ Song.nombreCantante.toStdString() +" - "+ Song.Duracion.toStdString() +" - "+QString::number(Song.precioDownload).toStdString()  +" - "+QString::number(Song.raiting).toStdString() +".\n" ;
+    }
+
+    return info;
 }
 
 string Ctunes::infoSong(int codeSong)
@@ -100,7 +144,7 @@ string Ctunes::infoSong(int codeSong)
     Songs.seek(0);
     while(!Songs.atEnd()){
         Formato Song;
-        read>>Song.code>>Song.cancion>>Song.nombreCantante>>Song.generoMusical>>Song.precioDownload>>Song.estrellas>>Song.reviews>>Song.raiting;
+        read>>Song.code>>Song.cancion>>Song.nombreCantante>>Song.generoMusical>>Song.precioDownload>>Song.estrellas>>Song.reviews>>Song.raiting>>Song.Duracion;
         string genero1;
         if (Song.generoMusical == POP) {
             genero1 = "POP";
@@ -117,9 +161,30 @@ string Ctunes::infoSong(int codeSong)
         } else if (Song.generoMusical == RANCHERA) {
             genero1 = "RANCHERA";
         }
+
         if (Song.code==codeSong){
+            int veces=0;
+            string InfoDownload="";
+            Download.seek(0);
+            while(!Download.atEnd()){
+                //int codigoDownloads;
+                //string fecha;
+                //int codeSongDownloads;
+                //string clienteDoDownloads;
+                //double songDownloads;
+                FormatoDownloads format;
+                QString fechaString, clienteString;
+                download >> format.codigoDownloads >> fechaString >> format.codeSongDownloads >> clienteString >> format.songDownloads;
+                format.fecha = fechaString.toStdString();
+                format.clienteDoDownloads = clienteString.toStdString();
+                if(format.codeSongDownloads==codeSong){
+                    veces++;
+                    InfoDownload+="Codigo de descarga: "+ QString::number(format.codigoDownloads).toStdString()  +", Fecha de descarga: "+format.fecha +", Codigo de cancion: "+QString::number(format.codeSongDownloads).toStdString()+", Cliente: "+format.clienteDoDownloads+", Precio: "+QString::number(format.songDownloads).toStdString()+"\n";
+                }
+            }
+            //Song.raiting= Song.estrellas/Song.reviews;
             return "Godigo: "+QString::number(Song.code).toStdString() +", Nombre de Cancion: "+Song.cancion.toStdString() +", Nombre Cantante: "+Song.nombreCantante.toStdString()+", Genero: "
-                   +genero1+", Precio Download: "+QString::number(Song.precioDownload).toStdString()+", Estrellas: "+QString::number(Song.estrellas).toStdString()+", Raiting: "+QString::number(Song.raiting).toStdString();
+                   +genero1+", Precio Download: "+QString::number(Song.precioDownload).toStdString()+", Estrellas: "+QString::number(Song.estrellas).toStdString()+", Raiting: "+QString::number(Song.raiting).toStdString()+", Cantidad de reviews: "+QString::number(Song.reviews).toStdString()+" \nVeces descargada: "+QString::number(veces).toStdString()+" \nInformacion: \n"+InfoDownload+"\nDuracion: "+Song.Duracion.toStdString();
         }
     }
     return"No existe dicho codigo.";

@@ -16,6 +16,7 @@ SOURCES += \
 
 HEADERS += \
     ctunes.h \
+    genero.h \
     invalidrateexception.h \
     mainwindow.h
 

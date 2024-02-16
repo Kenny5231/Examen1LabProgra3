@@ -17,7 +17,8 @@ class Ctunes
         double precioDownload = 0.0;
         int estrellas = 0;
         int reviews = 0;
-        int raiting = 0;
+        double raiting = 0;
+        QString Duracion=" ";
     };
     struct FormatoDownloads{
         int codigoDownloads;
@@ -30,7 +31,7 @@ class Ctunes
 public:
     Ctunes();
     int getCodigo(long offset);
-    void addSong(string nombre, string cantante, genero generoCantante, double precio);
+    void addSong(string nombre, string cantante, genero generoCantante, double precio, std::string duracion);
     bool reviewSong(int code, int stars);
     string downloadSong(int codeSong, string cliente);
     string songs(string txtFile);

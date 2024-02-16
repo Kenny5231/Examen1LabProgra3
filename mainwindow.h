@@ -48,6 +48,10 @@ private slots:
 
     void on_pushButton_5_pressed();
 
+    void on_BuyButton_6_pressed();
+
+    void on_pushButton_6_pressed();
+
 private:
     Ui::MainWindow *ui;
 };
