@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <string>
 #include <iostream>
+#include "invalidrateexception.h"
 #include <fstream>
 #include <ctunes.h>
 #include <genero.h>
@@ -9,7 +10,6 @@
 Ctunes ctunes;
 genero enumGenero;
 using std::string;
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -51,12 +51,20 @@ void MainWindow::on_AgregarCancionBt_pressed()
     } else if (GeneroMusical == "RANCHERA") {
         enumGenero = RANCHERA;
     }
-
     double precioSong = ui->Precio->text().toDouble();
+    if(NombreSong!=" " && nombreCantante!=" " && duracion!=" " && precioSong>0){
+        ctunes.addSong(NombreSong, nombreCantante, enumGenero, precioSong,duracion);
+        std::cout<<"termino";
+        ui->NombreCancion->clear();
+        ui->NombreCantante->clear();
+        ui->Duracion->clear();
+        ui->Precio->clear();
+        QMessageBox::information(this, "Guardado", QString("Se guardó correctamente"));
+        ui->stackedWidget->setCurrentIndex(0);
+    }else{
+        QMessageBox::information(this, "ERROR!", QString("No ingreso datos  o ingreso datos malos"));
+    }
 
-      ctunes.addSong(NombreSong, nombreCantante, enumGenero, precioSong,duracion);
-    std::cout<<"termino";
-    ui->stackedWidget->setCurrentIndex(0);
 }
 
 
@@ -65,12 +73,28 @@ void MainWindow::on_pushButtonGuardar_pressed()
 {
     int code = ui->CODESONG->text().toInt();
     int stars = ui->CantStars->text().toInt();
-    if(ctunes.reviewSong(code,stars)){
-         QMessageBox:: information(this,"Guardado",QString(QString:: fromStdString("Se guardo Correctamente")));
-    }else {
-        QMessageBox:: information(this,"OPS...",QString(QString:: fromStdString("Algo salio mal")));
+
+    try {
+        // para crear el error
+        if (stars < 0 || stars > 5) {
+            throw InvalidRateException(stars);
+        }
+
+        // en caso de que si este bien
+        if (ctunes.reviewSong(code, stars)) {
+            QMessageBox::information(this, "Guardado", QString("Se guardó correctamente"));
+        } else {
+            QMessageBox::information(this, "OPS...", QString("Algo salió mal"));
+        }
+    } catch (const InvalidRateException& e) {
+        QMessageBox::critical(this, "Error", QString("Error: ") + e.what());
     }
-     ui->stackedWidget->setCurrentIndex (0) ;
+
+    ui->CODESONG->clear();
+    ui->CantStars->clear();
+
+    ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 
@@ -97,6 +121,8 @@ void MainWindow::on_pushButton_3_pressed()
     int code = ui->codigoSong->text().toInt();
     QString info = QString:: fromStdString(ctunes.infoSong(code));
     ui->Texto->setText(info);
+
+    ui->codigoSong->clear();
 }
 
 
@@ -126,6 +152,7 @@ void MainWindow::on_pushButton_4_pressed()
 
 void MainWindow::on_pushButton_5_pressed()
 {
+    ui->Texto->clear();
     ui->stackedWidget->setCurrentIndex (0);
 }
 
@@ -136,6 +163,8 @@ void MainWindow::on_BuyButton_6_pressed()
     std::string NombreCliente = ui->NombreCliente->text().toStdString();
     QMessageBox:: information(this,"hello",QString(QString:: fromStdString(ctunes.downloadSong(code,NombreCliente))));
 
+    ui->CodigoDeCancion->clear();
+    ui->NombreCliente->clear();
 }
 
 
@@ -144,5 +173,8 @@ void MainWindow::on_pushButton_6_pressed()
     std::string nombretxt = ui->Nametext->text().toStdString();
     QString info = QString:: fromStdString(ctunes.songs(nombretxt));
     ui->SongsText->setText(info);
+
+    ui->Nametext->clear();
+    //ui->SongsText->clear();
 }
 

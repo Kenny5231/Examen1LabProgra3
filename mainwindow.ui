@@ -17,14 +17,14 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>90</x>
       <y>110</y>
       <width>631</width>
       <height>381</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QWidget" name="widget" native="true">
@@ -332,7 +332,7 @@
        <rect>
         <x>180</x>
         <y>150</y>
-        <width>131</width>
+        <width>151</width>
         <height>21</height>
        </rect>
       </property>
@@ -485,7 +485,7 @@
       <widget class="QLabel" name="label_16">
        <property name="geometry">
         <rect>
-         <x>250</x>
+         <x>190</x>
          <y>230</y>
          <width>131</width>
          <height>16</height>

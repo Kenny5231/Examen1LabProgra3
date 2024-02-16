@@ -1,22 +1,11 @@
 #include "invalidrateexception.h"
 
-#include <string>
-InvalidRateException::InvalidRateException() {
-    class InvalidRateException : public std::exception {
-    private:
-        int invalidRate;
+InvalidRateException::InvalidRateException(int rate) : invalidRate(rate) {}
 
-    public:
-        InvalidRateException(int rate) : invalidRate(rate) {}
-
-        const char* what() const noexcept override {
-            std::string message = "RATE ";
-            message += std::to_string(invalidRate);
-            message += " is not a valid number for a review";
-            return message.c_str();
-        }
-    };
+const char* InvalidRateException::what() const noexcept {
+    std::string message = "RATE ";
+    message += std::to_string(invalidRate);
+    message += " is not a valid number for a review";
+    return message.c_str();
 }
-
-
 

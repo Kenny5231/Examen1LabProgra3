@@ -8,12 +8,19 @@
 QFile Songs("/Users/Kenny/Proyects_Pragra3/ExamenProgra3Lab/songs.itn");
 QFile Codigo("/Users/Kenny/Proyects_Pragra3/ExamenProgra3Lab/codigo.itn");
 QFile Download("/Users/Kenny/Proyects_Pragra3/ExamenProgra3Lab/Download.itn");
+//templete
+
+template<class TipoD>
+double hacer(TipoD num){
+    double numero= num;
+    return num;
+}
+
 //para leer
 QDataStream write (&Songs);
 QDataStream read (&Songs);
 QDataStream code (&Codigo);
 QDataStream download(&Download);
-//
 Ctunes::Ctunes() {
     Songs.open(QIODevice::ReadWrite);
     Codigo.open(QIODevice::ReadWrite);
@@ -79,7 +86,9 @@ bool Ctunes::reviewSong(int code, int stars)
         if (cancion.code == code) {
             int newreviews = cancion.reviews + 1;
             int newstars = cancion.estrellas + stars;
-            double rating= newstars/newreviews;
+            double estrellas= hacer<int>(newstars);
+            double vistas=hacer<int>(newreviews);
+            double rating= estrellas/vistas;
             Songs.seek(seek);
             write << cancion.code << cancion.cancion << cancion.nombreCantante << cancion.generoMusical << cancion.precioDownload << newstars << newreviews << rating << cancion.Duracion;
             Songs.flush();
@@ -132,8 +141,8 @@ std::string Ctunes::songs(std::string txtFile) {
     while(!Songs.atEnd()){
         //CODIGO – TITULO – CANTANTE – DURACION – PRECIO – RATING
         read>>Song.code>>Song.cancion>>Song.nombreCantante>>Song.generoMusical>>Song.precioDownload>>Song.estrellas>>Song.reviews>>Song.raiting>>Song.Duracion;
-        escritura << Song.code<<" - " << Song.cancion <<" - "<< Song.nombreCantante <<" - "<< Song.Duracion <<" - "<< Song.precioDownload <<" - "<< Song.raiting<<".\n" ;
-        info+=QString::number(Song.code).toStdString()+"-" + Song.cancion.toStdString()+" - "+ Song.nombreCantante.toStdString() +" - "+ Song.Duracion.toStdString() +" - "+QString::number(Song.precioDownload).toStdString()  +" - "+QString::number(Song.raiting).toStdString() +".\n" ;
+        escritura <<"CODIGO: "<< Song.code<<" - TITULO: " << Song.cancion <<" - CANTANTE: "<< Song.nombreCantante <<" - DURACION: "<< Song.Duracion <<" - PRECIO: "<< Song.precioDownload <<" - RATING: "<< Song.raiting<<".\n" ;
+        info+="CODIGO:"+QString::number(Song.code).toStdString()+" - TITULO:" + Song.cancion.toStdString()+" - CANTANTE: "+ Song.nombreCantante.toStdString() +" - DURACION: "+ Song.Duracion.toStdString() +" - PRECIO: "+QString::number(Song.precioDownload).toStdString()  +" - RATING: "+QString::number(Song.raiting).toStdString() +".\n" ;
     }
 
     return info;
@@ -183,8 +192,8 @@ string Ctunes::infoSong(int codeSong)
                 }
             }
             //Song.raiting= Song.estrellas/Song.reviews;
-            return "Godigo: "+QString::number(Song.code).toStdString() +", Nombre de Cancion: "+Song.cancion.toStdString() +", Nombre Cantante: "+Song.nombreCantante.toStdString()+", Genero: "
-                   +genero1+", Precio Download: "+QString::number(Song.precioDownload).toStdString()+", Estrellas: "+QString::number(Song.estrellas).toStdString()+", Raiting: "+QString::number(Song.raiting).toStdString()+", Cantidad de reviews: "+QString::number(Song.reviews).toStdString()+" \nVeces descargada: "+QString::number(veces).toStdString()+" \nInformacion: \n"+InfoDownload+"\nDuracion: "+Song.Duracion.toStdString();
+            return "Godigo: "+QString::number(Song.code).toStdString() +", Nombre de Cancion: "+Song.cancion.toStdString() +", Nombre de Cantante: "+Song.nombreCantante.toStdString()+"\nDuracion: "+Song.Duracion.toStdString()+", Genero: "
+                   +genero1+", Precio Download: "+QString::number(Song.precioDownload).toStdString()+", Estrellas: "+QString::number(Song.estrellas).toStdString()+",\nRaiting: "+QString::number(Song.raiting).toStdString()+", Cantidad de reviews: "+QString::number(Song.reviews).toStdString()+" Veces descargada: "+QString::number(veces).toStdString()+" \nInformacion: \n"+InfoDownload;
         }
     }
     return"No existe dicho codigo.";

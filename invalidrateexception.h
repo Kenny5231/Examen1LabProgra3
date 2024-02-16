@@ -1,10 +1,16 @@
 #ifndef INVALIDRATEEXCEPTION_H
 #define INVALIDRATEEXCEPTION_H
 
-class InvalidRateException
-{
+#include <exception>
+#include <string>
+
+class InvalidRateException : public std::exception {
+private:
+    int invalidRate;
+
 public:
-    InvalidRateException();
+    InvalidRateException(int rate);
+    const char* what() const noexcept override;
 };
 
 #endif // INVALIDRATEEXCEPTION_H
